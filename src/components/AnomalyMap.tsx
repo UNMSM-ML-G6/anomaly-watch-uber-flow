@@ -27,26 +27,26 @@ const AnomalyMap = ({ region }: AnomalyMapProps) => {
   };
 
   return (
-    <Card className="h-96">
+    <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm h-96">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
         <div className="flex items-center space-x-2">
-          <MapPin className="h-5 w-5 text-blue-600" />
-          <CardTitle className="text-lg font-semibold">Mapa de Anomalías</CardTitle>
+          <MapPin className="h-5 w-5 text-blue-400" />
+          <CardTitle className="text-lg font-semibold text-white">Mapa de Anomalías</CardTitle>
         </div>
         <div className="flex items-center space-x-2">
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700/50">
             <Filter className="h-4 w-4 mr-2" />
             Filtros
           </Button>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700/50">
             <Maximize2 className="h-4 w-4" />
           </Button>
         </div>
       </CardHeader>
       <CardContent>
         {/* Mapa simulado */}
-        <div className="relative w-full h-64 bg-gray-100 rounded-lg overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-gray-100"></div>
+        <div className="relative w-full h-64 bg-slate-700/30 rounded-lg overflow-hidden border border-slate-600/50">
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-600/20 to-slate-800/40"></div>
           
           {/* Puntos de anomalías */}
           {anomalyData.map((point) => (
@@ -64,7 +64,7 @@ const AnomalyMap = ({ region }: AnomalyMapProps) => {
               
               {/* Tooltip */}
               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-                <div className="bg-gray-900 text-white text-xs rounded-lg px-3 py-2 whitespace-nowrap">
+                <div className="bg-slate-900 text-white text-xs rounded-lg px-3 py-2 whitespace-nowrap border border-slate-700">
                   <div className="font-medium">{point.area}</div>
                   <div>{point.count} anomalías</div>
                   <Badge variant="outline" className="mt-1 border-white/20 text-white">
@@ -81,22 +81,22 @@ const AnomalyMap = ({ region }: AnomalyMapProps) => {
           <div className="flex items-center space-x-4 text-sm">
             <div className="flex items-center space-x-1">
               <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <span className="text-gray-600">Crítico</span>
+              <span className="text-slate-300">Crítico</span>
             </div>
             <div className="flex items-center space-x-1">
               <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
-              <span className="text-gray-600">Alto</span>
+              <span className="text-slate-300">Alto</span>
             </div>
             <div className="flex items-center space-x-1">
               <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-              <span className="text-gray-600">Medio</span>
+              <span className="text-slate-300">Medio</span>
             </div>
             <div className="flex items-center space-x-1">
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              <span className="text-gray-600">Bajo</span>
+              <span className="text-slate-300">Bajo</span>
             </div>
           </div>
-          <Badge variant="secondary" className="text-xs">
+          <Badge variant="secondary" className="text-xs bg-slate-700/50 text-slate-300">
             Actualizado: hace 2 min
           </Badge>
         </div>

@@ -1,7 +1,6 @@
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChart3, TrendingUp } from "lucide-react";
 
 interface AnomalyAnalyticsProps {
@@ -28,26 +27,26 @@ const AnomalyAnalytics = ({ timeRange }: AnomalyAnalyticsProps) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Tendencias */}
-      <Card>
+      <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <div className="flex items-center space-x-2">
-            <TrendingUp className="h-5 w-5 text-blue-600" />
-            <CardTitle className="text-lg font-semibold">Tendencias</CardTitle>
+            <TrendingUp className="h-5 w-5 text-blue-400" />
+            <CardTitle className="text-lg font-semibold text-white">Tendencias</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={timeSeriesData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="time" fontSize={12} />
-                <YAxis fontSize={12} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="time" fontSize={12} stroke="#9CA3AF" />
+                <YAxis fontSize={12} stroke="#9CA3AF" />
                 <Tooltip 
                   contentStyle={{
-                    backgroundColor: "white",
-                    border: "1px solid #e5e7eb",
+                    backgroundColor: "#1F2937",
+                    border: "1px solid #374151",
                     borderRadius: "8px",
-                    boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)"
+                    color: "#F3F4F6"
                   }}
                 />
                 <Line 
@@ -73,26 +72,26 @@ const AnomalyAnalytics = ({ timeRange }: AnomalyAnalyticsProps) => {
       </Card>
 
       {/* Categorías */}
-      <Card>
+      <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <div className="flex items-center space-x-2">
-            <BarChart3 className="h-5 w-5 text-green-600" />
-            <CardTitle className="text-lg font-semibold">Por Categoría</CardTitle>
+            <BarChart3 className="h-5 w-5 text-green-400" />
+            <CardTitle className="text-lg font-semibold text-white">Por Categoría</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={categoryData} layout="horizontal">
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis type="number" fontSize={12} />
-                <YAxis dataKey="category" type="category" fontSize={12} width={80} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis type="number" fontSize={12} stroke="#9CA3AF" />
+                <YAxis dataKey="category" type="category" fontSize={12} width={80} stroke="#9CA3AF" />
                 <Tooltip 
                   contentStyle={{
-                    backgroundColor: "white",
-                    border: "1px solid #e5e7eb",
+                    backgroundColor: "#1F2937",
+                    border: "1px solid #374151",
                     borderRadius: "8px",
-                    boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)"
+                    color: "#F3F4F6"
                   }}
                 />
                 <Bar 

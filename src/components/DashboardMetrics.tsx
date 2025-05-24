@@ -4,40 +4,44 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const metrics = [
   {
-    title: "Anomalías Activas",
-    value: "23",
+    title: "Anomalías Detectadas",
+    value: "147",
     change: "+12%",
     trend: "up",
     icon: AlertTriangle,
-    color: "text-red-600",
-    bgColor: "bg-red-50",
+    color: "text-orange-400",
+    bgColor: "bg-gradient-to-br from-orange-400/20 to-red-400/10",
+    borderColor: "border-orange-400/30",
   },
   {
-    title: "Tiempo Respuesta",
-    value: "1.8s",
-    change: "-15%",
+    title: "Tiempo de Respuesta Promedio",
+    value: "2.3s",
+    change: "-8%",
     trend: "down",
-    icon: Clock,
-    color: "text-green-600",
-    bgColor: "bg-green-50",
-  },
-  {
-    title: "Viajes Monitoreados",
-    value: "15,247",
-    change: "+8%",
-    trend: "up",
     icon: Activity,
-    color: "text-blue-600",
-    bgColor: "bg-blue-50",
+    color: "text-emerald-400",
+    bgColor: "bg-gradient-to-br from-emerald-400/20 to-teal-400/10",
+    borderColor: "border-emerald-400/30",
   },
   {
-    title: "Zonas Afectadas",
-    value: "7",
-    change: "+2",
+    title: "Viajes Anómalos",
+    value: "1,247",
+    change: "+5%",
     trend: "up",
-    icon: MapPin,
-    color: "text-orange-600",
-    bgColor: "bg-orange-50",
+    icon: TrendingUp,
+    color: "text-amber-400",
+    bgColor: "bg-gradient-to-br from-amber-400/20 to-yellow-400/10",
+    borderColor: "border-amber-400/30",
+  },
+  {
+    title: "Precisión del Modelo",
+    value: "94.7%",
+    change: "+2%",
+    trend: "up",
+    icon: Clock,
+    color: "text-sky-400",
+    bgColor: "bg-gradient-to-br from-sky-400/20 to-blue-400/10",
+    borderColor: "border-sky-400/30",
   },
 ];
 
@@ -49,29 +53,34 @@ const DashboardMetrics = () => {
         const TrendIcon = metric.trend === "up" ? TrendingUp : TrendingDown;
         
         return (
-          <Card key={index} className="hover:shadow-md transition-shadow duration-200">
-            <CardContent className="p-6">
+          <Card key={index} className={`relative overflow-hidden backdrop-blur-xl bg-white/5 border ${metric.borderColor} hover:bg-white/10 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-white/10`}>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent"></div>
+            <CardContent className="relative p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1">
+                  <p className="text-sm font-medium text-white/90 tracking-wide mb-1">
                     {metric.title}
                   </p>
-                  <p className="text-2xl font-bold text-gray-900">
+                  <p className="text-3xl font-bold text-white mb-2 tracking-tight">
                     {metric.value}
                   </p>
-                  <div className="flex items-center mt-2">
-                    <TrendIcon className={`h-3 w-3 mr-1 ${
-                      metric.trend === "up" ? "text-green-500" : "text-red-500"
-                    }`} />
-                    <span className={`text-xs font-medium ${
-                      metric.trend === "up" ? "text-green-600" : "text-red-600"
-                    }`}>
-                      {metric.change}
-                    </span>
-                    <span className="text-xs text-gray-500 ml-1">vs ayer</span>
+                  <div className="flex items-center text-sm">
+                    <div className={`flex items-center px-2 py-1 rounded-full ${
+                      metric.trend === "up" ? "bg-emerald-500/20" : "bg-red-500/20"
+                    } backdrop-blur-sm`}>
+                      <TrendIcon className={`h-3 w-3 mr-1 ${
+                        metric.trend === "up" ? "text-emerald-400" : "text-red-400"
+                      }`} />
+                      <span className={`${
+                        metric.trend === "up" ? "text-emerald-400" : "text-red-400"
+                      } font-medium`}>
+                        {metric.change}
+                      </span>
+                    </div>
+                    <span className="text-white/60 ml-2 text-xs">desde ayer</span>
                   </div>
                 </div>
-                <div className={`p-3 rounded-lg ${metric.bgColor}`}>
+                <div className={`p-3 rounded-xl ${metric.bgColor} backdrop-blur-sm border border-white/10 shadow-lg`}>
                   <IconComponent className={`h-6 w-6 ${metric.color}`} />
                 </div>
               </div>

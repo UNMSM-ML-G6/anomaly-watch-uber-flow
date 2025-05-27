@@ -32,15 +32,17 @@ const Index = () => {
             {/* Key Metrics */}
             <DashboardMetrics />
             
-            {/* Main Content Grid */}
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-              {/* Map Section */}
-              <div className="xl:col-span-2">
-                <InteractiveHeatMap region={selectedRegion} />
+            {/* Main Content Grid - Mapa más prominente */}
+            <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+              {/* Map Section - Ocupa más espacio */}
+              <div className="xl:col-span-3">
+                <div className="bg-slate-800/50 border-slate-700 backdrop-blur-sm rounded-lg overflow-hidden">
+                  <InteractiveHeatMap region={selectedRegion} />
+                </div>
               </div>
               
               {/* Alerts Panel */}
-              <div>
+              <div className="xl:col-span-1">
                 <AlertsList />
               </div>
             </div>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import TopBar from "../components/TopBar";
 import DashboardMetrics from "../components/DashboardMetrics";
-import AnomalyMap from "../components/AnomalyMap";
+import InteractiveHeatMap from "../components/InteractiveHeatMap";
 import AnomalyAnalytics from "../components/AnomalyAnalytics";
 import AlertsList from "../components/AlertsList";
 import { SidebarProvider } from "../components/SidebarProvider";
@@ -36,7 +36,7 @@ const Index = () => {
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
               {/* Map Section */}
               <div className="xl:col-span-2">
-                <AnomalyMap region={selectedRegion} />
+                <InteractiveHeatMap region={selectedRegion} />
               </div>
               
               {/* Alerts Panel */}

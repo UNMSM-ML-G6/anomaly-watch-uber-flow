@@ -1,9 +1,9 @@
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MapPin, Layers, Navigation, Menu, Search, User, Filter, MoreHorizontal, Settings } from "lucide-react";
+import { MapPin, Layers, Navigation, Menu, Search, User, Filter, MoreHorizontal, Settings, ChartLine } from "lucide-react";
 import { useState } from "react";
+import ChartsPanel from "./ChartsPanel";
 
 interface InteractiveHeatMapProps {
   region: string;
@@ -16,6 +16,7 @@ const InteractiveHeatMap = ({ region, timeRange, onRegionChange, onTimeRangeChan
   const [mapType, setMapType] = useState<"satellite" | "map">("map");
   const [heatmapEnabled, setHeatmapEnabled] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
+  const [showCharts, setShowCharts] = useState(false);
 
   // Datos simulados de zonas con diferentes intensidades
   const heatZones = [
@@ -50,6 +51,14 @@ const InteractiveHeatMap = ({ region, timeRange, onRegionChange, onTimeRangeChan
               onClick={() => setShowFilters(!showFilters)}
             >
               <Filter className="h-5 w-5" />
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-gray-700 hover:bg-gray-100"
+              onClick={() => setShowCharts(!showCharts)}
+            >
+              <ChartLine className="h-5 w-5" />
             </Button>
             <Button variant="ghost" size="sm" className="text-gray-700 hover:bg-gray-100">
               <Search className="h-5 w-5" />
@@ -199,88 +208,108 @@ const InteractiveHeatMap = ({ region, timeRange, onRegionChange, onTimeRangeChan
       </div>
 
       {/* Panel inferior estilo Uber */}
-      <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-20">
+      <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-20 max-h-96 overflow-y-auto">
         {/* Handle para arrastrar */}
         <div className="flex justify-center pt-2 pb-1">
           <div className="w-8 h-1 bg-gray-300 rounded-full"></div>
         </div>
         
         <div className="px-4 pb-4">
-          {/* Métricas principales */}
-          <div className="grid grid-cols-4 gap-4 mb-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">5,221</div>
-              <div className="text-xs text-gray-500">Viajes totales</div>
+          {showCharts ? (
+            /* Panel de gráficas */
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900">Analytics Dashboard</h3>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => setShowCharts(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  ✕
+                </Button>
+              </div>
+              <ChartsPanel />
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-red-600">147</div>
-              <div className="text-xs text-gray-500">Anomalías</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">98.5%</div>
-              <div className="text-xs text-gray-500">Disponibilidad</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">2.3s</div>
-              <div className="text-xs text-gray-500">Resp. promedio</div>
-            </div>
-          </div>
-
-          {/* Alertas recientes */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-gray-900">Alertas Recientes</h3>
-              <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-700">
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </div>
-            
-            <div className="space-y-2">
-              <div className="flex items-center gap-3 p-2 bg-red-50 rounded-lg border border-red-100">
-                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                <div className="flex-1">
-                  <div className="text-sm font-medium text-gray-900">Pico anómalo en Zona Centro</div>
-                  <div className="text-xs text-gray-500">hace 2 min • 45 viajes afectados</div>
+          ) : (
+            <>
+              {/* Métricas principales */}
+              <div className="grid grid-cols-4 gap-4 mb-4">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-gray-900">5,221</div>
+                  <div className="text-xs text-gray-500">Viajes totales</div>
                 </div>
-                <Badge variant="destructive" className="text-xs">
-                  Alta
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-red-600">147</div>
+                  <div className="text-xs text-gray-500">Anomalías</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-green-600">98.5%</div>
+                  <div className="text-xs text-gray-500">Disponibilidad</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600">2.3s</div>
+                  <div className="text-xs text-gray-500">Resp. promedio</div>
+                </div>
+              </div>
+
+              {/* Alertas recientes */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-semibold text-gray-900">Alertas Recientes</h3>
+                  <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-700">
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3 p-2 bg-red-50 rounded-lg border border-red-100">
+                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                    <div className="flex-1">
+                      <div className="text-sm font-medium text-gray-900">Pico anómalo en Zona Centro</div>
+                      <div className="text-xs text-gray-500">hace 2 min • 45 viajes afectados</div>
+                    </div>
+                    <Badge variant="destructive" className="text-xs">
+                      Alta
+                    </Badge>
+                  </div>
+                  
+                  <div className="flex items-center gap-3 p-2 bg-orange-50 rounded-lg border border-orange-100">
+                    <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                    <div className="flex-1">
+                      <div className="text-sm font-medium text-gray-900">Tiempo de respuesta elevado</div>
+                      <div className="text-xs text-gray-500">hace 5 min • Zona Norte</div>
+                    </div>
+                    <Badge variant="secondary" className="text-xs bg-orange-100 text-orange-700">
+                      Media
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+
+              {/* Leyenda compacta */}
+              <div className="flex items-center justify-between pt-3 mt-3 border-t border-gray-100">
+                <div className="flex items-center gap-3 text-xs">
+                  <span className="text-gray-600 font-medium">Densidad:</span>
+                  <div className="flex items-center gap-1">
+                    <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-green-400"></div>
+                    <span className="text-gray-500">Baja</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="w-2 h-2 rounded-full bg-gradient-to-r from-yellow-400 to-orange-400"></div>
+                    <span className="text-gray-500">Media</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="w-2 h-2 rounded-full bg-gradient-to-r from-orange-500 to-red-500"></div>
+                    <span className="text-gray-500">Alta</span>
+                  </div>
+                </div>
+                <Badge variant="secondary" className="text-xs bg-green-50 text-green-700">
+                  Actualizado • 1 min
                 </Badge>
               </div>
-              
-              <div className="flex items-center gap-3 p-2 bg-orange-50 rounded-lg border border-orange-100">
-                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                <div className="flex-1">
-                  <div className="text-sm font-medium text-gray-900">Tiempo de respuesta elevado</div>
-                  <div className="text-xs text-gray-500">hace 5 min • Zona Norte</div>
-                </div>
-                <Badge variant="secondary" className="text-xs bg-orange-100 text-orange-700">
-                  Media
-                </Badge>
-              </div>
-            </div>
-          </div>
-
-          {/* Leyenda compacta */}
-          <div className="flex items-center justify-between pt-3 mt-3 border-t border-gray-100">
-            <div className="flex items-center gap-3 text-xs">
-              <span className="text-gray-600 font-medium">Densidad:</span>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-green-400"></div>
-                <span className="text-gray-500">Baja</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-yellow-400 to-orange-400"></div>
-                <span className="text-gray-500">Media</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-orange-500 to-red-500"></div>
-                <span className="text-gray-500">Alta</span>
-              </div>
-            </div>
-            <Badge variant="secondary" className="text-xs bg-green-50 text-green-700">
-              Actualizado • 1 min
-            </Badge>
-          </div>
+            </>
+          )}
         </div>
       </div>
     </div>
